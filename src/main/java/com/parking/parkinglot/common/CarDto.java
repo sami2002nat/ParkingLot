@@ -1,4 +1,4 @@
-package com.parking.parkinglot.entities.common;
+package com.parking.parkinglot.common;
 
 public class CarDto {
 

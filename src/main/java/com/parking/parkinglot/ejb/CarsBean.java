@@ -2,7 +2,7 @@ package com.parking.parkinglot.ejb;
 
 import com.parking.parkinglot.entities.Car;
 import com.parking.parkinglot.entities.User;
-import com.parking.parkinglot.entities.common.CarDto;
+import com.parking.parkinglot.common.CarDto;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -20,16 +20,16 @@ public class CarsBean {
     @PersistenceContext
     EntityManager entityManager;
 
-    public void deleteCarByIds(Collection<Long> carIds)
-    {
-        LOG.info("deleteCarsByIds");
-
-        for( Long carId : carIds)
+        public void deleteCarByIds(Collection<Long> carIds)
         {
-            Car car = entityManager.find(Car.class, carId);
-            entityManager.remove(car);
+            LOG.info("deleteCarsByIds");
+
+            for( Long carId : carIds)
+            {
+                Car car = entityManager.find(Car.class, carId);
+                entityManager.remove(car);
+            }
         }
-    }
 
     public void updateCar(Long carId, String licensePlate, String parkingSpot, Long userId)
     {

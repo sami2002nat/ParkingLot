@@ -1,6 +1,4 @@
-package com.parking.parkinglot.entities.common;
-
-import jakarta.persistence.Basic;
+package com.parking.parkinglot.common;
 
 public class UserDto {
     private Long id;
