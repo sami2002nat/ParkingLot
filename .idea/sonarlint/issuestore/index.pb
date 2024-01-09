@@ -64,12 +64,6 @@ W
 'src/main/webapp/WEB-INF/pages/login.jsp,c\1\c107b7abb068a2d3ce0fcc79bbba601cf5055776
 i
 9src/main/java/com/parking/parkinglot/servlets/Logout.java,8\4\84e9ccfc10dbda3ba4c6a13e1d74d9895a844ef3
-j
-:src/main/java/com/parking/parkinglot/ejb/PasswordBean.java,d\2\d20905d7945fbff7951e4e4c66ac711449632a69
-Y
-)src/main/webapp/WEB-INF/pages/addUser.jsp,7\5\7531f42367c4f7929eae8583344b12883afb7c58
-j
-:src/main/java/com/parking/parkinglot/servlets/AddUser.java,3\f\3ffe0b70a20f15af660adb06183641fed2b9cbb3
 h
 8src/main/java/com/parking/parkinglot/common/UserDto.java,3\4\347d3712d82f14c83cc208459843583209507f5d
 g

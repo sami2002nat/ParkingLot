@@ -1,8 +1,10 @@
 package com.parking.parkinglot.ejb;
 
-import com.parking.parkinglot.entities.Car;
-import com.parking.parkinglot.entities.User;
 import com.parking.parkinglot.common.CarDto;
+import com.parking.parkinglot.entities.Car;
+import com.parking.parkinglot.entities.CarPhoto;
+import com.parking.parkinglot.entities.User;
+import com.parkinglot.parkinglot.common.CarPhotoDto;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
@@ -20,16 +22,16 @@ public class CarsBean {
     @PersistenceContext
     EntityManager entityManager;
 
-        public void deleteCarByIds(Collection<Long> carIds)
-        {
-            LOG.info("deleteCarsByIds");
+    public void deleteCarByIds(Collection<Long> carIds)
+    {
+        LOG.info("deleteCarsByIds");
 
-            for( Long carId : carIds)
-            {
-                Car car = entityManager.find(Car.class, carId);
-                entityManager.remove(car);
-            }
+        for( Long carId : carIds)
+        {
+            Car car = entityManager.find(Car.class, carId);
+            entityManager.remove(car);
         }
+    }
 
     public void updateCar(Long carId, String licensePlate, String parkingSpot, Long userId)
     {
@@ -76,15 +78,14 @@ public class CarsBean {
         }
     }
 
-    public List<CarDto> findAllCars(){
+    public List<CarDto> findAllCars() throws Exception {
         LOG.info("findAllCars");
-        try{
+        try {
             TypedQuery<Car> typedQuery = entityManager.createQuery("SELECT c FROM Car c", Car.class);
             List<Car> cars = typedQuery.getResultList();
-
             return copyCarsToDto(cars);
-        }catch (Exception e){
-            throw new EJBException(e);
+        } catch (Exception ex) {
+            throw new Exception(ex);
         }
     }
 
@@ -99,4 +100,32 @@ public class CarsBean {
 
         return carDtos;
     }
+
+    public void addPhotoToCar(Long carId, String filename, String fileType, byte[] fileContent) {
+        LOG.info("addPhotoToCar");
+        CarPhoto photo = new CarPhoto();
+        photo.setFilename(filename);
+        photo.setFileType(fileType);
+        photo.setFileContent(fileContent);
+        Car car = entityManager.find(Car.class, carId);
+        if (car.getPhoto() != null) {
+            entityManager.remove(car.getPhoto());
+        }
+        car.setPhoto(photo);
+        photo.setCar(car);
+        entityManager.persist(photo);
+    }
+    public CarPhotoDto findPhotoByCarId(Integer carId) {
+        List<CarPhoto> photos = entityManager
+                .createQuery("SELECT p FROM CarPhoto p where p.Car.id = :id", CarPhoto.class)
+                .setParameter("id", carId)
+                .getResultList();
+        if (photos.isEmpty()) {
+            return null;
+        }
+        CarPhoto photo = photos.get(0); // the first element
+        return new CarPhotoDto(photo.getId(), photo.getFilename(), photo.getFileType(),
+                photo.getFileContent());
+    }
+
 }

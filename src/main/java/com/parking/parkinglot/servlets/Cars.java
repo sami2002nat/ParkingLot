@@ -29,10 +29,15 @@ public class Cars extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-        List<CarDto> cars = carsBean.findAllCars();
+        List<CarDto> cars = null;
+        try {
+            cars = carsBean.findAllCars();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         request.setAttribute("cars", cars);
         request.setAttribute("numberOfFreeParkingSpots", 10);
-        request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request,response);
     }
 
     @Override

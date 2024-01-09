@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"WRITE_USERS"}))
-@WebServlet(name = "AddUser", value = "/AddUSer")
+@WebServlet(name = "AddUser", value = "/AddUser")
 public class AddUser extends HttpServlet {
 
     @Inject
