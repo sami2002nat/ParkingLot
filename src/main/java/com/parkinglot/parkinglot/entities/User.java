@@ -32,10 +32,8 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
     @Email
     @Column(unique = true, nullable = false, length = 100)
-
     private String email;
     private String password;
 
@@ -55,9 +53,9 @@ public class User {
         this.password = password;
     }
 
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Car> cars;
 
-    @OneToMany
     public Collection<Car> getCars() {
         return cars;
     }

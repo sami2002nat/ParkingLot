@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="username">Username</label>
-        <input type="text" class="form-control" id="username" name="username" placeholder="" value="${user.email}" required>
+        <input type="text" class="form-control" id="username" name="username" placeholder="" value="${user.username}" required>
         <div class="invalid-feedback">
           Username is required.
         </div>
@@ -20,7 +20,7 @@
     <div class="row">
       <div class="col-md-6 mb-3">
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="" value="${user.username}" required>
+        <input type="email" class="form-control" id="email" name="email" placeholder="" value="${user.email}" required>
         <div class="invalid-feedback">
           Email is required.
         </div>
@@ -34,6 +34,17 @@
         <div class="invalid-feedback">
           Password is required for change.
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="user_groups">Groups</label>
+        <select class="custom-select d-block w-100" multiple id="user_groups" name="user_groups">
+          <c:forEach var="group" items="${allGroups}">
+            <option value="${group}" ${userGroups.contains(group) ? 'selected' : ''}>${group}</option>
+          </c:forEach>
+        </select>
       </div>
     </div>
 

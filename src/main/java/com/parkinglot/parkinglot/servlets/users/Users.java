@@ -15,9 +15,9 @@ import java.util.Collection;
 import java.util.List;
 
 
-@DeclareRoles({"READ_USERS","WRITE_USERS"})
+@DeclareRoles({"READ_USERS","WRITE_USERS","INVOICING"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_USERS"}),
-        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_USERS"})})
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_USERS", "INVOICING"})})
 @WebServlet(name = "Users", value = "/Users")
 public class Users extends HttpServlet {
 
@@ -38,16 +38,15 @@ public class Users extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        if(!invoiceBean.getUserIds().isEmpty()) {
+        request.setAttribute("users", users);
+
+        if(request.isUserInRole("INVOICING") && !invoiceBean.getUserIds().isEmpty()) {
             Collection<String> usernames = usersBean.findUsernameByUserIds(invoiceBean.getUserIds());
             request.setAttribute("invoices", usernames);
         }
-
-        request.setAttribute("users", users);
         request.getRequestDispatcher("/WEB-INF/pages/users/users.jsp").forward(request,
                 response);
     }
-
 
     @Override
     protected void doPost(HttpServletRequest request,

@@ -1,27 +1,32 @@
 package com.parkinglot.parkinglot.entities;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
+import java.util.Collection;
 
 @Entity
 public class Car {
 
 
+    @Size(min = 3, max = 100)
+    @Column(unique = true, nullable = false, length = 100)
     String licensePlate;
+    @Size(min = 3, max = 100)
+    @Column(unique = true, nullable = false, length = 100)
     String parkingSpot;
 
+    @ManyToOne
     private User owner;
 
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @OneToOne(mappedBy = "Car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CarPhoto photo;
 
-    @ManyToOne
+
     public User getOwner() {
         return owner;
     }
@@ -56,7 +61,6 @@ public class Car {
         this.parkingSpot = parkingSpot;
     }
 
-    @OneToOne(mappedBy = "Car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public CarPhoto getPhoto() {
         return photo;
     }

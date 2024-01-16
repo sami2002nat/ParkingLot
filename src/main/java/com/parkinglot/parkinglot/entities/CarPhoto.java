@@ -52,13 +52,13 @@ public class CarPhoto {
 
 
     @OneToOne
-    private com.parkinglot.parkinglot.entities.Car Car;
+    private Car Car;
 
-    public com.parkinglot.parkinglot.entities.Car getCar() {
+    public Car getCar() {
         return Car;
     }
 
-    public void setCar(com.parkinglot.parkinglot.entities.Car car) {
+    public void setCar(Car car) {
         Car = car;
     }
 }
